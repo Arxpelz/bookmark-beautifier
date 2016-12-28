@@ -133,3 +133,75 @@ function updateBookmarkListBuffer(keys) {
         toggleAllButtons();
     });
 }
+
+function printBookmarksForTrashButton() {
+    chrome.bookmarks.getTree(function(root) {
+        //console.log(root);
+        $('#bookmarks').empty();
+        ROOT_TABS = root[0].children.length;
+        root.forEach(function(folder) {
+            $('#bookmarks').append(printBookmarksFolderForTrashButton(folder)
+                .css('padding-right', "2px"));
+        });
+    });
+}
+
+function printBookmarksFolderForTrashButton(bookmarkFolder) {
+    var list = $("<ul>");
+    bookmarkFolder.children.forEach(function(bookmark) {
+        if (typeof bookmark.url != 'undefined') {
+            list.append(printNodeForTrashButton(bookmark));
+        } else {
+            var folder = printNodeFolderForTrashButton(bookmark);
+            var r = $("<button type=\"submit\" class=\"dropIcon\"><i class=\"fa fa-caret-down fa-lg\"></i></button>");
+            folder.prepend(r);
+            folder.append(printBookmarksFolderForTrashButton(bookmark));
+            list.append(folder);
+            $(r).click(function(e) {
+                if ($(folder).find('li').is(':visible')) {
+                    $(folder).children().hide();
+                    $(folder).find('.dropIcon').show();
+                } else {
+                    $(folder).children().show();
+                }
+
+            });
+            if (bookmark.id > ROOT_TABS) {
+                $(folder).children().hide();
+                $(folder).find('.dropIcon').show();
+            }
+        }
+    });
+    return list;
+}
+
+function printNodeForTrashButton(bookmark) {
+    var li = $("<li>")
+        .attr('id', 'bLink');
+    var link = $("<a />", {
+        text: bookmark.title
+
+    });
+    checkbox = $(document.createElement('input')).attr({
+        id: 'Checkbox',
+        name: 'myCheckbox',
+        value: '1',
+        type: 'checkbox'
+    });
+    li.append(link);
+    li.append(checkbox);
+    return li;
+}
+
+function printNodeFolderForTrashButton(bookmark) {
+    var li = $("<li>")
+        .attr('id', 'bFolder')
+        .text(bookmark.title);
+
+    var checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.value = 1;
+    checkbox.name = "todo[]";
+    li.append(checkbox);
+    return li;
+}

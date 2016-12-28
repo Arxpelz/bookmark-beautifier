@@ -46,7 +46,11 @@ $().ready(function() {
 
     $('#add-folder').click(function(e) {
         showSearchLine();
-    })
+    });
+
+    $('#trash').click(function(e) {
+        trashButton();
+    });
 
     $("#search").keyup(function() {
         if (EDIT_MODE) {
@@ -351,6 +355,7 @@ function showEditButtons() {
 }
 
 function hideEditButtons() {
+    $("#checkbox").parent().remove();
     $(".search").slideDown(400, function print() {
         printBookmarks(false);
     });
@@ -361,6 +366,8 @@ function hideEditButtons() {
 }
 
 function showSearchLine() {
+    $("#checkbox").parent().remove();
+    printBookmarks();
     $(".search").slideDown(400);
     $('#search').attr("placeholder", "New folder name");
 }
@@ -372,4 +379,9 @@ function addNewButton(name) {
     }, function callback() {
         printBookmarks();
     });
+}
+
+function trashButton() {
+    printBookmarksForTrashButton()
+        //$('<input type="checkbox" class="liChk" />').appendTo('#bookmarks');
 }

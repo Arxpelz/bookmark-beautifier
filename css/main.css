@@ -142,6 +142,9 @@ body {
     margin-left: 245px;
 }
 
+#Checkbox{
+  margin-left: 10px;
+}
 /*
 .bLink:before {
   content: "\f111";

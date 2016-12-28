@@ -142,8 +142,8 @@ body {
     margin-left: 245px;
 }
 
-#Checkbox{
-  margin-left: 10px;
+.checkbox{
+  color: #05668D;
 }
 /*
 .bLink:before {

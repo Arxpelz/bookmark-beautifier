@@ -182,8 +182,8 @@ function printNodeForTrashButton(bookmark) {
         text: bookmark.title
 
     });
-    checkbox = $(document.createElement('input')).attr({
-        id: 'Checkbox',
+    var checkbox = $(document.createElement('input')).attr({
+        class: 'form-group',
         name: 'myCheckbox',
         value: '1',
         type: 'checkbox'
@@ -198,10 +198,12 @@ function printNodeFolderForTrashButton(bookmark) {
         .attr('id', 'bFolder')
         .text(bookmark.title);
 
-    var checkbox = document.createElement('input');
-    checkbox.type = "checkbox";
-    checkbox.value = 1;
-    checkbox.name = "todo[]";
+    var checkbox = $(document.createElement('input')).attr({
+        class: 'form-group',
+        name: 'myCheckbox',
+        value: '1',
+        type: 'checkbox'
+    });
     li.append(checkbox);
     return li;
 }
